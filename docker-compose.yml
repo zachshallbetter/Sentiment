@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  sentiment_analysis_app_stage:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: sentiment_analysis_tool
+        APP_VERSION: "1.0.0"
+        APP_DESCRIPTION: "A tool for analyzing the sentiment of text."
+        MAIN_SCRIPT: "index.js"
+        TEST_COMMAND: "npm test"
+        AUTHOR: "Your Name"
+        LICENSE: "MIT"
+    entrypoint:
+    - npm
+    - start
+    image: jupyter/base-notebook:latest
+    init: true
+    volumes:
+    - .:/
+    - /node_modules
+    environment:
+      APP_NAME: sentiment_analysis_tool
+      APP_VERSION: "1.0.0"
+      APP_DESCRIPTION: "A tool for analyzing the sentiment of text."
+      MAIN_SCRIPT: "index.js"
+      TEST_COMMAND: "npm test"
+      AUTHOR: "Your Name"
+      LICENSE: "MIT"
+    ports:
+    - "3000:3000"

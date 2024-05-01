@@ -1,0 +1,30 @@
+[
+    {
+        "text": "I love this product",
+        "label": "positive"
+    },
+    {
+        "text": "This is the worst movie I have ever seen",
+        "label": "negative"
+    },
+    {
+        "text": "I feel indifferent about this",
+        "label": "neutral"
+    },
+    {
+        "text": "What an amazing experience!",
+        "label": "positive"
+    },
+    {
+        "text": "I am so bored and unimpressed",
+        "label": "negative"
+    },
+    {
+        "text": "It's okay, but not great",
+        "label": "neutral"
+    },
+    {
+        "text": "Absolutely fantastic!",
+        "label": "positive"
+    }
+]

@@ -1,0 +1,32 @@
+services:
+  sentiment_analysis_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: sentiment
+        APP_VERSION: "1.0.0"
+        APP_DESCRIPTION: "Your application description"
+        MAIN_SCRIPT: "index.js"
+        TEST_COMMAND: "echo \"Error: no test specified\" && exit 1"
+        AUTHOR: "Your Name"
+        LICENSE: "MIT"
+    working_dir: /app
+    entrypoint:
+    - npm
+    - start
+    image: jupyter/base-notebook:3.1.10
+    init: true
+    volumes:
+    - .:/
+    - node_modules:/node_modules
+    environment:
+      NODE_ENV: development
+    ports:
+    - "3000:3000"
+    command: >
+      sh -c "npm install && exec npm start"
+    restart: always
+
+volumes:
+  node_modules:
