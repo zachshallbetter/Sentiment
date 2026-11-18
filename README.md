@@ -113,4 +113,4 @@ Version 1.0.0 (`package.json`, tag `v1.0.0`). This is an early prototype:
 
 ## License
 
-No license is declared yet. `package.json` lists `ISC`, but the repository has no LICENSE file and no license has been confirmed.
+MIT. See [LICENSE](LICENSE).
