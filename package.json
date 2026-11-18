@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Zach Shallbetter",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.19.2",
     "natural": "^7.0.5",
