@@ -1,11 +1,13 @@
 import express from 'express';
 import path from 'path';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-const execAsync = promisify(exec);
+// execFile runs the analyzer directly, with the text as one argument: no shell parses it.
+const execFileAsync = promisify(execFile);
+const MAX_TEXT_LENGTH = 5000;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,8 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Route for sentiment analysis
 app.post('/analyze', async (req, res) => {
   const text = req.body.text;
+  if (typeof text !== 'string' || text.length === 0 || text.length > MAX_TEXT_LENGTH) {
+    return res.status(400).send(`text must be a string of 1 to ${MAX_TEXT_LENGTH} characters`);
+  }
   try {
-    const { stdout } = await execAsync(`python analyzer.py "${text.replace(/"/g, '\\"')}"`);
+    const { stdout } = await execFileAsync('python', [path.join(__dirname, 'analyzer.py'), text],
+                                           { timeout: 10000, maxBuffer: 64 * 1024 });
     res.send({ sentiment: stdout.trim() });
   } catch (error) {
     console.error(`exec error: ${error}`);
