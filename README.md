@@ -85,3 +85,32 @@ To install the Datadog Agent as a systemwide LaunchDaemon, set `DD_SYSTEMDAEMON_
 
 Use the Datadog Agent app in the system tray (for a single user install), launchctl (for a systemwide LaunchDaemon install), or the command line datadog-agent (located in /usr/local/bin).
 Enable/disable integrations in /opt/datadog-agent/etc/conf.d.
+
+## Repository map
+
+- `index.js`: an Express server with a `POST /analyze` route (port from `PORT`, default 3000).
+- `analyzer.js`: the command-line analyzer entry point, which takes the text as its first argument.
+- `utils/`: `textUtilities.js` and `analysisUtilities.js`, the text and analysis helpers.
+- `data/`: the custom word list and the sentiment sample files.
+- `tests/`: `testSentimentAnalysis.js` and `evaluateSentiment.py`.
+- `Dockerfile`, `docker-compose.yml`, `compose-dev.yaml`: container setup.
+
+## How to verify
+
+There is no working automated test run yet. `npm test` is the npm placeholder and exits with an error. The evaluation
+steps above describe `tests/evaluateSentiment.py`, which reads `./testData/sentimentTestSamples.json` while the samples
+are in `data/sentimentTestSamples.json`.
+
+## Status and limitations
+
+Version 1.0.0 (`package.json`, tag `v1.0.0`). This is an early prototype:
+
+- `index.js` runs `python analyzer.py`, and the repository contains `analyzer.js`, not `analyzer.py`.
+- The README and the test scripts refer to `sentimentAnalyzer.js`, which is not in the repository.
+- `tests/testSentimentAnalysis.js` loads `config/customWordlist.json`; the word list is in `data/`.
+- The `/analyze` route passes request text into a shell command (see [SECURITY.md](SECURITY.md)).
+- The Datadog section above describes installing the Datadog Agent and is not specific to this project's code.
+
+## License
+
+No license is declared yet. `package.json` lists `ISC`, but the repository has no LICENSE file and no license has been confirmed.
